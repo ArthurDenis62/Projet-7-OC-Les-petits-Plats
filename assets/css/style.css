@@ -113,6 +113,10 @@ form input:focus {
     outline: none;
 }
 
+form input:focus::placeholder {
+    color: transparent;
+}
+
 form button {
     position: absolute;
     right: 10px;
@@ -126,6 +130,14 @@ form button {
     background-color: #1B1B1B;
 }
 
+form button:hover {
+    background-color: #FFD15B;
+}
+
 form button i {
     color: white;
+}
+
+::placeholder {
+    color: #999;
 }
