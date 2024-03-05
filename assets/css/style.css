@@ -84,9 +84,6 @@ main {
     font-family: "Anton", sans-serif;
 }
 
-.BodySearchRecipes {
-    padding-top: 667px;
-}
 
 form {
     background-color: grey;
@@ -140,4 +137,44 @@ form button i {
 
 ::placeholder {
     color: #999;
+}
+
+.BodySearchRecipes {
+    padding-top: 667px;
+    margin: 1em auto;
+    width: 1220px;
+}
+
+.SearchContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.SearchContent {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.SearchContent select {
+    padding: 10px;
+    border: 0.2px solid black;
+    border-radius: 0.6em;
+    width: 195px;
+    font-size: 16px;
+}
+
+.NbrRecipes {
+    color: black;
+    font-size: 21px;
+    font-weight: 400;
+}
+
+.Cards {
+    width: 380px;
+    height: 731px;
+}
+
+.Cards img {
+    height: 253px;
 }
