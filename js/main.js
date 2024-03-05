@@ -8,5 +8,9 @@
 // Utiliser le proxy pour rendre les éléments
 
 import displayRecipes from './affichage.js'
+import { fillSelectOptionsWithFilter, ingredientsList, appliancesList, utensilsList } from './filterSelect.js'
 
+fillSelectOptionsWithFilter('Ingredients', ingredientsList, 'IngredientsSearch')
+fillSelectOptionsWithFilter('Appareils', appliancesList, 'AppareilsSearch')
+fillSelectOptionsWithFilter('Ustensiles', utensilsList, 'UstensilesSearch')
 displayRecipes()

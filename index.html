@@ -24,24 +24,27 @@
         </div>
         <div class="BodySearchRecipes">
             <div class="SearchContainer">
-                <div class="SearchContent">                    
-                    <select type="search" name="Ingredients" id="Ingredients">
-                        <option value="NULL">Ingrédients</option>
-                    </select>                    
-                    <select type="search" name="Appareils" id="Appareils">
-                        <option value="NULL">Appareils</option>
-                    </select>                    
-                    <select type="search" name="Ustensiles" id="Ustensiles">
-                        <option value="NULL">Ustensiles</option>
+                <div class="SearchContent">
+                    <select type="search" name="Ingredients" id="Ingredients" class="filterSelect">
+                        <input type="text" id="IngredientsSearch" placeholder="Rechercher un ingrédient" class="filterInput">
+                        
+                    </select>
+                    <select type="search" name="Appareils" id="Appareils" class="filterSelect">
+                        <input type="text" id="AppareilsSearch" placeholder="Rechercher un appareil" class="filterInput">
+                        
+                    </select>
+                    <select type="search" name="Ustensiles" id="Ustensiles" class="filterSelect">
+                        <input type="text" id="UstensilesSearch" placeholder="Rechercher un ustensile" class="filterInput">
+                        
                     </select>
                 </div>
-                <div class="NbrRecipes">
-                    <h1>1500 recettes</h1>
+                <div id="NbrRecipes">
+                    <h1>recettes</h1>
                 </div>
             </div>
         </div>
         <div id="RecipesContainer"></div>
     </main>
-    <script defer type="module" src="./assets/js/main.js"></script>
+    <script defer type="module" src="./js/main.js"></script>
 </body>
 </html>

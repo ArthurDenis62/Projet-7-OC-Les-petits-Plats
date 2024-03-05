@@ -1,14 +1,13 @@
 import recipes from './recipes.js'
 
 function displayRecipes () {
-  console.log('Toto')
   const containerRecipes = document.getElementById('RecipesContainer')
   recipes.forEach(recette => {
     const recetteDiv = document.createElement('div')
-    recetteDiv.classList.add('recette')
+    recetteDiv.classList.add('cards')
 
     const imageElement = document.createElement('img')
-    imageElement.src = recette.image
+    imageElement.src = `../assets/img/${recette.image}`
     imageElement.alt = recette.name
     imageElement.style.width = '100px'
     recetteDiv.appendChild(imageElement)

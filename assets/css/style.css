@@ -16,7 +16,6 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -44,11 +43,11 @@ main {
     margin: 0 auto;
     max-width: 1440px;
     position: relative;
-    padding-top: 667;
+    background-color: lightgray;
 }
 
 .Banner {
-    position: fixed;
+    position: absolute;
     top: 0;
     z-index: 1;
 }
@@ -140,8 +139,8 @@ form button i {
 }
 
 .BodySearchRecipes {
-    padding-top: 667px;
-    margin: 1em auto;
+    padding-top: 700px;
+    margin: auto;
     width: 1220px;
 }
 
@@ -158,23 +157,95 @@ form button i {
 
 .SearchContent select {
     padding: 10px;
-    border: 0.2px solid black;
+    border: none;
     border-radius: 0.6em;
     width: 195px;
     font-size: 16px;
 }
 
-.NbrRecipes {
+#NbrRecipes {
     color: black;
     font-size: 21px;
     font-weight: 400;
+    font-family: 'Anton', sans-serif;
 }
 
-.Cards {
+#RecipesContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    width: 1220px;
+    margin: 2em auto;
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 380px;
     height: 731px;
+    text-align: center;
+    border: solid 1px black;
 }
 
-.Cards img {
+.cards img {
     height: 253px;
 }
+
+.cards:nth-child(3n+1){
+    justify-self: start;
+}
+
+.cards:nth-child(3n+2) {
+    justify-self: center;
+}
+
+
+.cards:nth-child(3n){
+    justify-self: end;
+}
+
+@media (max-width: 1100px) {
+    #RecipesContainer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .cards:nth-child(3n+1){
+        justify-self: center;
+    }
+    .cards:nth-child(3n+2) {
+        justify-self: center;
+    }
+    .cards:nth-child(3n){
+        justify-self: center;
+    }
+}
+
+@media (max-width: 740px) {
+    #RecipesContainer {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+.custom-select-container {
+    position: relative;
+  }
+  
+  .custom-select {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .options-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    display: none;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  
+  .filter-input {
+    width: 100%;
+  }
