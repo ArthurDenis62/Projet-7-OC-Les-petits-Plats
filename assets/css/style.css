@@ -225,27 +225,3 @@ form button i {
         grid-template-columns: repeat(1, 1fr);
     }
 }
-
-.custom-select-container {
-    position: relative;
-  }
-  
-  .custom-select {
-    display: inline-block;
-    position: relative;
-  }
-  
-  .options-container {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1;
-    display: none;
-    border: 1px solid #ccc;
-    max-height: 150px;
-    overflow-y: auto;
-  }
-  
-  .filter-input {
-    width: 100%;
-  }

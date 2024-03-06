@@ -2,19 +2,29 @@ import recipes from './recipes.js'
 
 function displayRecipes () {
   const containerRecipes = document.getElementById('RecipesContainer')
-  recipes.forEach(recette => {
+  recipes.forEach(r => {
     const recetteDiv = document.createElement('div')
-    recetteDiv.classList.add('cards')
+    recetteDiv.classList.add('c_cards')
 
-    const imageElement = document.createElement('img')
-    imageElement.src = `../assets/img/${recette.image}`
-    imageElement.alt = recette.name
-    imageElement.style.width = '100px'
-    recetteDiv.appendChild(imageElement)
+    const imgElt = document.createElement('img')
+    imgElt.src = `../assets/img/${r.image}`
+    imgElt.alt = r.name
+    imgElt.classList.add('c_img')
+    recetteDiv.appendChild(imgElt)
 
-    const nomElement = document.createElement('h3')
-    nomElement.textContent = recette.name
-    recetteDiv.appendChild(nomElement)
+    const nomElt = document.createElement('h3')
+    nomElt.textContent = r.name
+    recetteDiv.appendChild(nomElt)
+
+    const descElt = document.createElement('p')
+    descElt.textContent = r.description
+    recetteDiv.appendChild(descElt)
+
+    r.ingredients.forEach(ingredient => {
+      const ingrElt = document.createElement('span')
+      ingrElt.textContent = `${ingredient.quantity || ''} ${ingredient.unit || ''} ${ingredient.ingredient}`
+      recetteDiv.appendChild(ingrElt)
+    })
 
     containerRecipes.appendChild(recetteDiv)
   })
