@@ -2,6 +2,7 @@ import recipes from './recipes.js'
 
 function displayRecipes () {
   const containerRecipes = document.getElementById('RecipesContainer')
+  containerRecipes.innerHTML = ''
   recipes.forEach(r => {
     const recetteDiv = document.createElement('div')
     recetteDiv.classList.add('c_cards')
@@ -34,7 +35,7 @@ function displayRecipes () {
 
     const titleIngre = document.createElement('span')
     titleIngre.textContent = 'INGRÉDIENTS'
-    ingreDiv.appendChild(titleIngre)
+    contentDiv.appendChild(titleIngre)
 
     r.ingredients.forEach(ingredient => {
       const ingrDiv = document.createElement('div')
