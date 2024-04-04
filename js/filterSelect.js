@@ -1,7 +1,3 @@
-const ingredientsList = []
-const appliancesList = []
-const utensilsList = []
-
 const selectedFilters = {
   ingredients: [],
   appliances: [],
@@ -10,7 +6,7 @@ const selectedFilters = {
 
 function fillOptionsWithFilter (selectId, optionsList, searchInputId) {
   const selectorElement = document.getElementById(selectId)
-
+  selectorElement.textContent = ''
   // Remplir les options initiales
   optionsList.forEach(option => {
     const optionElement = document.createElement('option')
@@ -28,4 +24,4 @@ function getListWithoutSelectedValue (filterType, optionsList) {
   return optionsList.filter(option => !allSelectedOptions.includes(option))
 }
 
-export { getListWithoutSelectedValue, fillOptionsWithFilter, ingredientsList, appliancesList, utensilsList }
+export { getListWithoutSelectedValue, fillOptionsWithFilter }

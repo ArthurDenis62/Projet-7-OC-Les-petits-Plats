@@ -1,6 +1,4 @@
-import recipes from './recipes.js'
-
-function displayRecipes () {
+function displayRecipes (recipes) {
   const containerRecipes = document.getElementById('RecipesContainer')
   containerRecipes.innerHTML = ''
   recipes.forEach(r => {
