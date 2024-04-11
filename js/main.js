@@ -32,6 +32,7 @@ displayRecipes(recipes)
 
 document.querySelector('#IngredientsList').addEventListener('change', (e) => {
   const selectedIngredient = e.target.value.toLowerCase()
+  e.target.value = ''
   const recipesWithSelectedIngredient = recipes.filter(recipe =>
     recipe.ingredients.some(ingredient =>
       ingredient.ingredient.toLowerCase() === selectedIngredient
@@ -54,6 +55,7 @@ document.querySelector('#IngredientsList').addEventListener('change', (e) => {
 
 document.querySelector('#AppareilsList').addEventListener('change', (e) => {
   const selectedAppliance = e.target.value.toLowerCase()
+  e.target.value = ''
   const recipesWithSelectedAppliance = recipes.filter(recipe =>
     recipe.appliance.toLowerCase() === selectedAppliance
   )
@@ -74,6 +76,7 @@ document.querySelector('#AppareilsList').addEventListener('change', (e) => {
 
 document.querySelector('#UstensilesList').addEventListener('change', (e) => {
   const selectedUtensil = e.target.value.toLowerCase()
+  e.target.value = ''
   const recipesWithSelectedUtensil = recipes.filter(recipe =>
     recipe.ustensils.some(utensil =>
       utensil.toLowerCase() === selectedUtensil
@@ -96,22 +99,16 @@ document.querySelector('#UstensilesList').addEventListener('change', (e) => {
 
 function removeFilter (filterType, filterValue) {
   selectedFilters[filterType] = selectedFilters[filterType].filter(filter => filter !== filterValue)
-  updateDisplayedRecipes(selectedFilters)
-  const filterTags = document.querySelectorAll('.filter-tag')
-  filterTags.forEach(tag => {
-    if (tag.textContent === filterValue) {
-      tag.remove()
-      addOptionToList(`${filterType}List`, filterValue)
-    }
-  })
+  const filteredRecipes = updateDisplayedRecipes(selectedFilters, recipes)
+  addTagsListsContent(filteredRecipes, selectedFilters)
+  fillOptionsWithFilter('Ingredients', ingredientsList, 'IngredientsList')
+  fillOptionsWithFilter('Appareils', appliancesList, 'AppareilsList')
+  fillOptionsWithFilter('Ustensiles', utensilsList, 'UstensilesList')
+  displayRecipes(filteredRecipes)
 }
 
-function addOptionToList (selectId, optionValue) {
-  const selectorElement = document.getElementById(selectId)
-  const optionElement = document.createElement('option')
-  optionElement.value = optionValue
-  optionElement.textContent = optionValue
-  selectorElement.appendChild(optionElement)
+function removeFilterTag (elt) {
+  elt.remove()
 }
 
 // Ajouter le tag au click sur le site
@@ -123,12 +120,15 @@ function addFilterTag (filterType, filterValue) {
   const iconElement = document.createElement('i')
   iconElement.classList.add('fa', 'fa-xmark')
   tagElement.appendChild(iconElement)
-  tagElement.addEventListener('click', () => removeFilter(filterType, filterValue))
+  tagElement.addEventListener('click', () => {
+    removeFilter(filterType, filterValue)
+    removeFilterTag(tagElement)
+  })
   filterTagsContainer.appendChild(tagElement)
 }
 
 function updateDisplayedRecipes (selectedFilters, recipes) {
-  return recipes.filter(recipe => {
+  const filteredRecipes = recipes.filter(recipe => {
     return selectedFilters.ingredients.every(ingredient =>
       recipe.ingredients.some(rIngredient =>
         rIngredient.ingredient.toLowerCase() === ingredient
@@ -141,6 +141,8 @@ function updateDisplayedRecipes (selectedFilters, recipes) {
       )
     )
   })
+  document.getElementById('NbrRecipes').textContent = `${filteredRecipes.length} recettes`
+  return filteredRecipes
 }
 
 function addTagsListsContent (recipes, selectedFilters) {
@@ -165,3 +167,30 @@ function addTagsListsContent (recipes, selectedFilters) {
     })
   })
 }
+
+document.getElementById('mainFilter').addEventListener('submit', (e) => {
+  e.preventDefault()
+  const searchInput = document.getElementById('Search')
+  const searchTerms = searchInput.value.trim().toLowerCase().split(/\s*,\s*|\s+/)
+  if (searchTerms.length > 0) {
+    const filteredRecipes = recipes.filter(recipe =>
+      searchTerms.every(searchTerm =>
+        recipe.name.toLowerCase().includes(searchTerm.trim()) || // Par titre de recette
+        recipe.ingredients.some(ingredient =>
+          ingredient.ingredient.toLowerCase().includes(searchTerm.trim()) // Par ingrédients
+        ) ||
+        recipe.appliance.toLowerCase().includes(searchTerm.trim()) || // Par appareils
+        recipe.ustensils.some(utensil =>
+          utensil.toLowerCase().includes(searchTerm.trim()) // Par ustensiles
+        ) ||
+        recipe.description.toLowerCase().includes(searchTerm.trim()) // Par descriptions
+      )
+    )
+    displayRecipes(filteredRecipes)
+    updateDisplayedRecipes(selectedFilters, filteredRecipes)
+  } else {
+    displayRecipes(recipes)
+  }
+})
+
+updateDisplayedRecipes(selectedFilters, recipes)

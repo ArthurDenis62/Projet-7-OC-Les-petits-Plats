@@ -15,7 +15,7 @@
                 <img src="./assets/img-logo/logo.svg" alt="Logo les petits plats">
                 <div class="BannerContent">
                     <p>CHERCHEZ PARMI PLUS DE 1500 RECETTES <br> DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</p>
-                    <form>
+                    <form id="mainFilter">
                         <input type="text" name="Search" id="Search" placeholder="Rechercher une recette, un ingrédient, ...">
                         <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </form>
@@ -25,7 +25,7 @@
         <div class="BodySearchRecipes">
             <div class="SearchContainer">
                 <div class="SearchContent">
-                    <input type="text" list="Ingredients" name="Ingredients" id="IngredientsList" placeholder="Ingrédient">
+                    <input type="text" list="Ingredients" name="Ingredients" id="IngredientsList" placeholder="Ingrédients">
                     <datalist id="Ingredients"></datalist>
                     <input type="text" list="Appareils" name="Appareils" id="AppareilsList" placeholder="Appareils">
                     <datalist id="Appareils"></datalist>

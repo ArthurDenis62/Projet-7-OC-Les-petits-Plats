@@ -151,7 +151,8 @@ form button i {
 }
 
 .SearchContent {
-    width: 60%;
+    position: relative;
+    width: 45%;
     display: flex;
     justify-content: space-between;
 }
@@ -176,7 +177,8 @@ form button i {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;
     width: 1220px;
-    margin: 2em auto;
+    margin: 2em auto 0 auto;
+    padding-bottom: 2em;
 }
 
 .c_cards {
@@ -184,7 +186,7 @@ form button i {
     flex-direction: column;
     justify-content: space-between;
     width: 390px;
-    height: 750px;
+    height: 825px;
     text-align: center;
     border: none;
     border-radius: 1em;
@@ -291,6 +293,7 @@ form button i {
     font-weight: 400;
     color: #7A7A7A;
     margin-bottom: 1em;
+    line-height: 1.2em;
 }
 
 datalist {
@@ -320,7 +323,9 @@ datalist {
 
 #filterTags {
     margin: auto;
+    display: flex;
     width: 1220px;
+    column-gap: 2em;
 }
 
 .filter-tag {
@@ -332,6 +337,7 @@ datalist {
     align-items: center;
     border-radius: 0.6em;
     margin-top: 1em;
+    cursor: pointer;
 }
 
 .SearchContent input {
@@ -340,4 +346,40 @@ datalist {
     height: 40px;
     border: none;
     border-radius: 0.6em;
+}
+
+.SearchContent input:focus {
+    outline: none;
+}
+
+.SearchContent input:focus::placeholder {
+    color: transparent;
+}
+
+/* Style pour l'input */
+.SearchContent input[type="text"] {
+    padding-left: 15px;
+    width: 150px;
+    box-sizing: border-box;
+    border: 1px solid #ccc; /* Bordure de l'input */
+    border-radius: 5px; /* Bordure arrondie */
+    font-size: 16px; /* Taille de la police */
+    outline: none; /* Supprimer l'effet de focus */
+}
+
+/* Style pour la flèche par défaut */
+.SearchContent input[type="text"]::after {
+    content: "\25BC"; /* Code Unicode de la flèche vers le bas */
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 14px; /* Taille de la flèche */
+    pointer-events: none;
+    transition: transform 0.3s ease; /* Ajout d'une transition pour une animation fluide */
+    pointer-events: none;
+}
+
+.SearchContent input[type="text"]:focus::after {
+    transform: translateY(-50%) rotate(180deg); /* Rotation de 180 degrés */
 }
