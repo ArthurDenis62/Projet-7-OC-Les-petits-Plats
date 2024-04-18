@@ -30,6 +30,58 @@ fillOptionsWithFilter('Ustensiles', utensilsList, 'UstensilesList')
 
 displayRecipes(recipes)
 
+const IngredientsList = document.getElementById('IngredientsList')
+const Ingredients = document.getElementById('Ingredients')
+IngredientsList.onfocus = function () {
+  Ingredients.style.display = 'block'
+  IngredientsList.style.borderRadius = '5px 5px 0 0'
+}
+for (const option of Ingredients.options) {
+  option.onclick = function () {
+    IngredientsList.value = option.value
+    Ingredients.style.display = 'none'
+    IngredientsList.style.borderRadius = '5px'
+  }
+};
+IngredientsList.oninput = function () {
+  const text = IngredientsList.value.toUpperCase()
+  for (const option of Ingredients.options) {
+    if (option.value.toUpperCase().indexOf(text) > -1) {
+      option.style.display = 'block'
+    } else {
+      option.style.display = 'none'
+    }
+  };
+}
+let currentFocus = -1
+IngredientsList.onkeydown = function (e) {
+  if (e.keyCode === 40) {
+    currentFocus++
+    addActive(Ingredients.options)
+  } else if (e.keyCode === 38) {
+    currentFocus--
+    addActive(Ingredients.options)
+  } else if (e.keyCode === 13) {
+    e.preventDefault()
+    if (currentFocus > -1) {
+      if (Ingredients.options) { Ingredients.options[currentFocus].click() }
+    }
+  }
+}
+
+function addActive (x) {
+  if (!x) return false
+  removeActive(x)
+  if (currentFocus >= x.length) currentFocus = 0
+  if (currentFocus < 0) { currentFocus = (x.length - 1) }
+  x[currentFocus].classList.add('active')
+}
+function removeActive (x) {
+  for (let i = 0; i < x.length; i++) {
+    x[i].classList.remove('active')
+  }
+}
+
 document.querySelector('#IngredientsList').addEventListener('change', (e) => {
   const selectedIngredient = e.target.value.toLowerCase()
   e.target.value = ''
@@ -168,29 +220,47 @@ function addTagsListsContent (recipes, selectedFilters) {
   })
 }
 
-document.getElementById('mainFilter').addEventListener('submit', (e) => {
-  e.preventDefault()
+const submitButton = document.querySelector('#mainFilter button[type="button"]')
+submitButton.addEventListener('click', () => {
   const searchInput = document.getElementById('Search')
-  const searchTerms = searchInput.value.trim().toLowerCase().split(/\s*,\s*|\s+/)
-  if (searchTerms.length > 0) {
-    const filteredRecipes = recipes.filter(recipe =>
-      searchTerms.every(searchTerm =>
-        recipe.name.toLowerCase().includes(searchTerm.trim()) || // Par titre de recette
-        recipe.ingredients.some(ingredient =>
-          ingredient.ingredient.toLowerCase().includes(searchTerm.trim()) // Par ingrédients
-        ) ||
-        recipe.appliance.toLowerCase().includes(searchTerm.trim()) || // Par appareils
-        recipe.ustensils.some(utensil =>
-          utensil.toLowerCase().includes(searchTerm.trim()) // Par ustensiles
-        ) ||
-        recipe.description.toLowerCase().includes(searchTerm.trim()) // Par descriptions
-      )
-    )
+  const searchTerm = searchInput.value.trim().toLowerCase()
+  if (searchTerm.length >= 3) {
+    const filteredRecipes = filterRecipes(searchTerm)
     displayRecipes(filteredRecipes)
     updateDisplayedRecipes(selectedFilters, filteredRecipes)
-  } else {
+  } else if (searchTerm.length === 0) {
     displayRecipes(recipes)
   }
 })
+
+const searchInput = document.getElementById('Search')
+
+searchInput.addEventListener('input', (e) => {
+  const searchTerm = e.target.value.trim().toLowerCase()
+
+  if (searchTerm.length >= 3) {
+    const filteredRecipes = filterRecipes(searchTerm)
+    displayRecipes(filteredRecipes)
+    updateDisplayedRecipes(selectedFilters, filteredRecipes)
+  } else if (searchTerm.length === 0) {
+    displayRecipes(recipes)
+  }
+})
+
+function filterRecipes (searchTerm) {
+  return recipes.filter(recipe =>
+    searchTerm.split(/\s*,\s*|\s+/).every(searchTerm =>
+      recipe.name.toLowerCase().includes(searchTerm.trim()) || // Par titre de recette
+      recipe.ingredients.some(ingredient =>
+        ingredient.ingredient.toLowerCase().includes(searchTerm.trim()) // Par ingrédients
+      ) ||
+      recipe.appliance.toLowerCase().includes(searchTerm.trim()) || // Par appareils
+      recipe.ustensils.some(utensil =>
+        utensil.toLowerCase().includes(searchTerm.trim()) // Par ustensiles
+      ) ||
+      recipe.description.toLowerCase().includes(searchTerm.trim()) // Par descriptions
+    )
+  )
+}
 
 updateDisplayedRecipes(selectedFilters, recipes)

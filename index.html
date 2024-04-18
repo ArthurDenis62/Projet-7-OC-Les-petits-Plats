@@ -17,7 +17,7 @@
                     <p>CHERCHEZ PARMI PLUS DE 1500 RECETTES <br> DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</p>
                     <form id="mainFilter">
                         <input type="text" name="Search" id="Search" placeholder="Rechercher une recette, un ingrédient, ...">
-                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <button type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
                     </form>
                 </div>
             </div>
@@ -25,11 +25,11 @@
         <div class="BodySearchRecipes">
             <div class="SearchContainer">
                 <div class="SearchContent">
-                    <input type="text" list="Ingredients" name="Ingredients" id="IngredientsList" placeholder="Ingrédients">
+                    <input autocomplete="off" type="text" list="" name="Ingredients" id="IngredientsList" placeholder="Ingrédients">
                     <datalist id="Ingredients"></datalist>
-                    <input type="text" list="Appareils" name="Appareils" id="AppareilsList" placeholder="Appareils">
+                    <input autocomplete="off" type="text" list="" name="Appareils" id="AppareilsList" placeholder="Appareils">
                     <datalist id="Appareils"></datalist>
-                    <input type="text" list="Ustensiles" name="Ustensiles" id="UstensilesList" placeholder="Ustensiles">
+                    <input autocomplete="off" type="text" list="" name="Ustensiles" id="UstensilesList" placeholder="Ustensiles">
                     <datalist id="Ustensiles"></datalist>
                 </div>
                 <div id="NbrRecipes">
