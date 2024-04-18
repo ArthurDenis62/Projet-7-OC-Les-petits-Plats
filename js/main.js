@@ -250,7 +250,7 @@ searchInput.addEventListener('input', (e) => {
 function filterRecipes (searchTerm) {
   return recipes.filter(recipe =>
     searchTerm.split(/\s*,\s*|\s+/).every(searchTerm =>
-      recipe.name.toLowerCase().includes(searchTerm.trim()) || // Par titre de recettetata
+      recipe.name.toLowerCase().includes(searchTerm.trim()) || // Par titre de recette
       recipe.ingredients.some(ingredient =>
         ingredient.ingredient.toLowerCase().includes(searchTerm.trim()) // Par ingrédients
       ) ||
