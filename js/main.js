@@ -149,6 +149,17 @@ document.querySelector('#UstensilesList').addEventListener('change', (e) => {
   }
 })
 
+const dropDown = document.querySelector('.drop-down')
+const searchContent = document.querySelector('.SearchContent')
+dropDown.addEventListener('click', e => {
+  const container = e.target.classList.contains("drop-down")? e.target : e.target.closest(".drop-down")
+  container.classList.toggle("open")
+})
+
+searchContent.addEventListener('click', e => {
+  e.stopPropagation()
+})
+
 function removeFilter (filterType, filterValue) {
   selectedFilters[filterType] = selectedFilters[filterType].filter(filter => filter !== filterValue)
   const filteredRecipes = updateDisplayedRecipes(selectedFilters, recipes)

@@ -151,10 +151,15 @@ form button i {
 }
 
 .SearchContent {
+    display: none;
     position: relative;
     width: 45%;
     display: flex;
     justify-content: space-between;
+}
+
+.open .SearchContent {
+    display: block;
 }
 
 .SearchContent select {
