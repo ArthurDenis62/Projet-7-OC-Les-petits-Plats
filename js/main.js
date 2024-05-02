@@ -180,39 +180,43 @@ function removeActive3 (x) {
   }
 }
 
-
-document.querySelector('#IngredientsList').addEventListener('change', (e) => {
-  const selectedIngredient = e.target.value.toLowerCase()
-  e.target.value = ''
-  const recipesWithSelectedIngredient = recipes.filter(recipe =>
-    recipe.ingredients.some(ingredient =>
-      ingredient.ingredient.toLowerCase() === selectedIngredient
-    )
-  )
-
-  if (recipesWithSelectedIngredient.length > 0) {
-    selectedFilters.ingredients.push(selectedIngredient)
-    const filteredRecipes = updateDisplayedRecipes(selectedFilters, recipes)
-    addFilterTag('ingredients', selectedIngredient)
-    addTagsListsContent(filteredRecipes, selectedFilters)
-    fillOptionsWithFilter('Ingredients', ingredientsList, 'IngredientsList')
-    fillOptionsWithFilter('Appareils', appliancesList, 'AppareilsList')
-    fillOptionsWithFilter('Ustensiles', utensilsList, 'UstensilesList')
-    displayRecipes(filteredRecipes)
-  } else {
-    alert(`Aucune recette ne contient l'ingrédient "${selectedIngredient}".`)
-  }
-})
-
 const dropDown1 = document.querySelector('.drop-down1')
 const searchContent1 = document.querySelector('.SearchContent')
 dropDown1.addEventListener('click', e => {
   const container = e.target.classList.contains("drop-down1")? e.target : e.target.closest(".drop-down1")
-  container.classList.toggle("open1")
+  container.classList.toggle("open")
+  if (container.classList.contains("open")) {
+    dropDown1.querySelector('input').focus()
+  }
 })
 
 searchContent1.addEventListener('click', e => {
-  e.stopPropagation()
+  if (e.target.nodeName != 'OPTION') {
+    e.stopPropagation()
+  }
+  if (e.target.nodeName === 'OPTION') {
+    const selectedOption = e.target
+    const selectedIngredient = e.target.value.toLowerCase()
+    const recipesWithSelectedIngredient = recipes.filter(recipe =>
+      recipe.ingredients.some(ingredient =>
+        ingredient.ingredient.toLowerCase() === selectedIngredient
+      )
+    )
+    if (recipesWithSelectedIngredient.length > 0) {
+      selectedFilters.ingredients.push(selectedIngredient)
+      const filteredRecipes = updateDisplayedRecipes(selectedFilters, recipes)
+      addFilterTag('ingredients', selectedIngredient)
+      addTagsListsContent(filteredRecipes, selectedFilters)
+      fillOptionsWithFilter('Ingredients', ingredientsList, 'IngredientsList')
+      fillOptionsWithFilter('Appareils', appliancesList, 'AppareilsList')
+      fillOptionsWithFilter('Ustensiles', utensilsList, 'UstensilesList')
+      displayRecipes(filteredRecipes)
+    } else {
+      alert(`Aucune recette ne contient l'ingrédient "${selectedIngredient}".`)
+    }
+    searchContent1.querySelector('input').value = ''
+    e.stopPropagation()
+  }
 })
 
 document.querySelector('#AppareilsList').addEventListener('change', (e) => {
@@ -237,7 +241,7 @@ document.querySelector('#AppareilsList').addEventListener('change', (e) => {
 })
 
 const dropDown2 = document.querySelector('.drop-down2')
-const searchContent2 = document.querySelector('.SearchContent')
+const searchContent2 = dropDown2.querySelector('.SearchContent')
 dropDown2.addEventListener('click', e => {
   const container = e.target.classList.contains("drop-down2")? e.target : e.target.closest(".drop-down2")
   container.classList.toggle("open")
@@ -271,7 +275,7 @@ document.querySelector('#UstensilesList').addEventListener('change', (e) => {
 })
 
 const dropDown3 = document.querySelector('.drop-down3')
-const searchContent3 = document.querySelector('.SearchContent')
+const searchContent3 = dropDown3.querySelector('.SearchContent')
 dropDown3.addEventListener('click', e => {
   const container = e.target.classList.contains("drop-down3")? e.target : e.target.closest(".drop-down3")
   container.classList.toggle("open")
