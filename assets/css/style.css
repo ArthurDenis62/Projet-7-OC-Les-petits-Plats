@@ -153,7 +153,6 @@ form button i {
 .SearchContent {
     display: none;
     position: relative;
-    width: 45%;
     display: flex;
     justify-content: space-between;
 }
@@ -345,13 +344,6 @@ datalist {
     cursor: pointer;
 }
 
-.SearchContent input {
-    background-color: white;
-    width: 125px;
-    height: 40px;
-    border: none;
-    border-radius: 0.6em;
-}
 
 .SearchContent input:focus {
     outline: none;
@@ -361,18 +353,23 @@ datalist {
     color: transparent;
 }
 
-.SearchContent input[type="text"] {
-    padding-left: 15px;
-    width: 150px;
-    box-sizing: border-box;
+.SearchContainer div p {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    column-gap: 4em;
+    width: 250px;
+    height: 50px;
     border: 1px solid #ccc;
-    border-radius: 5px;
     font-size: 16px;
+    font-weight: bold;
     outline: none;
+    background-color: white;
+    border-radius: 12px;
 }
 
 /* Style pour la flèche par défaut */
-.SearchContent input[type="text"]::after {
+.SearchContainer div p::after {
     content: "\25BC";
     position: absolute;
     top: 50%;
@@ -384,7 +381,7 @@ datalist {
     pointer-events: none;
 }
 
-.SearchContent input[type="text"]:focus::after {
+.SearchContainer div:focus::after {
     transform: translateY(-50%) rotate(180deg);
 }
 
@@ -402,20 +399,62 @@ datalist {
     border-radius: 0 0 5px 5px;
     border-top: none;
     font-family: sans-serif;
-    width: 350px;
-    padding: 5px;
-    top: 39px;
+    width: 247px;
+    padding: 0px;
+    top: 60px;
+    text-align: left;
 }
   
 option {
     background-color: white;
-    padding: 4px;
+    padding-left: 22px;
     color: black;
-    margin-bottom: 1px;
     font-size: 18px;
     cursor: pointer;
+    white-space: break-spaces;
 }
 
 option:hover, .active{
-    background-color: lightblue;
+    background-color: orange;
+}
+
+.SearchContent {
+    display: none;
+}
+  
+.open1 .SearchContent {
+    display: block;
+    background-color: white;
+    height: 60px;
+    position: relative;
+    top: -10px;
+    text-align: center;
+    left: 2px;
+    width: 99%;
+}
+
+.open .SearchContent {
+    display: block;
+    background-color: white;
+    height: 60px;
+    position: relative;
+    top: -10px;
+    text-align: center;
+    left: 1px;
+    width: 99%;
+}
+
+.SearchContainer input {
+    width: 196px;
+    height: 36px;
+    font-size: 16px;
+    border: solid 0.8px grey;
+    margin-top: 0.6em;
+}
+
+.SearchContent i {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    font-size: 1.4em;
 }

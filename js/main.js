@@ -34,13 +34,11 @@ const IngredientsList = document.getElementById('IngredientsList')
 const Ingredients = document.getElementById('Ingredients')
 IngredientsList.onfocus = function () {
   Ingredients.style.display = 'block'
-  IngredientsList.style.borderRadius = '5px 5px 0 0'
 }
 for (const option of Ingredients.options) {
   option.onclick = function () {
     IngredientsList.value = option.value
     Ingredients.style.display = 'none'
-    IngredientsList.style.borderRadius = '5px'
   }
 };
 IngredientsList.oninput = function () {
@@ -53,34 +51,135 @@ IngredientsList.oninput = function () {
     }
   };
 }
-let currentFocus = -1
+let currentFocus1 = -1
 IngredientsList.onkeydown = function (e) {
   if (e.keyCode === 40) {
-    currentFocus++
-    addActive(Ingredients.options)
+    currentFocus1++
+    addActive1(Ingredients.options)
   } else if (e.keyCode === 38) {
-    currentFocus--
-    addActive(Ingredients.options)
+    currentFocus1--
+    addActive1(Ingredients.options)
   } else if (e.keyCode === 13) {
     e.preventDefault()
-    if (currentFocus > -1) {
-      if (Ingredients.options) { Ingredients.options[currentFocus].click() }
+    if (currentFocus1 > -1) {
+      if (Ingredients.options) { Ingredients.options[currentFocus1].click() }
     }
   }
 }
 
-function addActive (x) {
+function addActive1 (x) {
   if (!x) return false
-  removeActive(x)
-  if (currentFocus >= x.length) currentFocus = 0
-  if (currentFocus < 0) { currentFocus = (x.length - 1) }
-  x[currentFocus].classList.add('active')
+  removeActive1(x)
+  if (currentFocus1 >= x.length) currentFocus1 = 0
+  if (currentFocus1 < 0) { currentFocus1 = (x.length - 1) }
+  x[currentFocus1].classList.add('active')
 }
-function removeActive (x) {
+function removeActive1 (x) {
   for (let i = 0; i < x.length; i++) {
     x[i].classList.remove('active')
   }
 }
+
+const AppareilsList = document.getElementById('AppareilsList')
+const Appareils = document.getElementById('Appareils')
+AppareilsList.onfocus = function () {
+  Appareils.style.display = 'block'
+}
+for (const option of Appareils.options) {
+  option.onclick = function () {
+    AppareilsList.value = option.value
+    Appareils.style.display = 'none'
+  }
+};
+AppareilsList.oninput = function () {
+  const text = AppareilsList.value.toUpperCase()
+  for (const option of Appareils.options) {
+    if (option.value.toUpperCase().indexOf(text) > -1) {
+      option.style.display = 'block'
+    } else {
+      option.style.display = 'none'
+    }
+  };
+}
+let currentFocus2 = -1
+AppareilsList.onkeydown = function (e) {
+  if (e.keyCode === 40) {
+    currentFocus2++
+    addActive2(Appareils.options)
+  } else if (e.keyCode === 38) {
+    currentFocus2--
+    addActive2(Appareils.options)
+  } else if (e.keyCode === 13) {
+    e.preventDefault()
+    if (currentFocus2 > -1) {
+      if (Appareils.options) { Appareils.options[currentFocus2].click() }
+    }
+  }
+}
+
+function addActive2 (x) {
+  if (!x) return false
+  removeActive2(x)
+  if (currentFocus2 >= x.length) currentFocus2 = 0
+  if (currentFocus2 < 0) { currentFocus2 = (x.length - 1) }
+  x[currentFocus2].classList.add('active')
+}
+function removeActive2 (x) {
+  for (let i = 0; i < x.length; i++) {
+    x[i].classList.remove('active')
+  }
+}
+
+const UstensilesList = document.getElementById('UstensilesList')
+const Ustensiles = document.getElementById('Ustensiles')
+UstensilesList.onfocus = function () {
+  Ustensiles.style.display = 'block'
+}
+for (const option of Ustensiles.options) {
+  option.onclick = function () {
+    UstensilesList.value = option.value
+    Ustensiles.style.display = 'none'
+  }
+};
+UstensilesList.oninput = function () {
+  const text = UstensilesList.value.toUpperCase()
+  for (const option of Ustensiles.options) {
+    if (option.value.toUpperCase().indexOf(text) > -1) {
+      option.style.display = 'block'
+    } else {
+      option.style.display = 'none'
+    }
+  };
+}
+let currentFocus3 = -1
+UstensilesList.onkeydown = function (e) {
+  if (e.keyCode === 40) {
+    currentFocus3++
+    addActive3(Ustensiles.options)
+  } else if (e.keyCode === 38) {
+    currentFocus3--
+    addActive3(Ustensiles.options)
+  } else if (e.keyCode === 13) {
+    e.preventDefault()
+    if (currentFocus3 > -1) {
+      if (Ustensiles.options) { Ustensiles.options[currentFocus3].click() }
+    }
+  }
+}
+
+function addActive3 (x) {
+  if (!x) return false
+  removeActive3(x)
+  if (currentFocus3 >= x.length) currentFocus3 = 0
+  if (currentFocus3 < 0) { currentFocus3 = (x.length - 1) }
+  x[currentFocus3].classList.add('active')
+}
+function removeActive3 (x) {
+  for (let i = 0; i < x.length; i++) {
+    x[i].classList.remove('active')
+  }
+}
+
 
 document.querySelector('#IngredientsList').addEventListener('change', (e) => {
   const selectedIngredient = e.target.value.toLowerCase()
@@ -105,6 +204,17 @@ document.querySelector('#IngredientsList').addEventListener('change', (e) => {
   }
 })
 
+const dropDown1 = document.querySelector('.drop-down1')
+const searchContent1 = document.querySelector('.SearchContent')
+dropDown1.addEventListener('click', e => {
+  const container = e.target.classList.contains("drop-down1")? e.target : e.target.closest(".drop-down1")
+  container.classList.toggle("open1")
+})
+
+searchContent1.addEventListener('click', e => {
+  e.stopPropagation()
+})
+
 document.querySelector('#AppareilsList').addEventListener('change', (e) => {
   const selectedAppliance = e.target.value.toLowerCase()
   e.target.value = ''
@@ -124,6 +234,17 @@ document.querySelector('#AppareilsList').addEventListener('change', (e) => {
   } else {
     alert(`Aucune recette ne contient l'appareil "${selectedAppliance}".`)
   }
+})
+
+const dropDown2 = document.querySelector('.drop-down2')
+const searchContent2 = document.querySelector('.SearchContent')
+dropDown2.addEventListener('click', e => {
+  const container = e.target.classList.contains("drop-down2")? e.target : e.target.closest(".drop-down2")
+  container.classList.toggle("open")
+})
+
+searchContent2.addEventListener('click', e => {
+  e.stopPropagation()
 })
 
 document.querySelector('#UstensilesList').addEventListener('change', (e) => {
@@ -149,14 +270,14 @@ document.querySelector('#UstensilesList').addEventListener('change', (e) => {
   }
 })
 
-const dropDown = document.querySelector('.drop-down')
-const searchContent = document.querySelector('.SearchContent')
-dropDown.addEventListener('click', e => {
-  const container = e.target.classList.contains("drop-down")? e.target : e.target.closest(".drop-down")
+const dropDown3 = document.querySelector('.drop-down3')
+const searchContent3 = document.querySelector('.SearchContent')
+dropDown3.addEventListener('click', e => {
+  const container = e.target.classList.contains("drop-down3")? e.target : e.target.closest(".drop-down3")
   container.classList.toggle("open")
 })
 
-searchContent.addEventListener('click', e => {
+searchContent3.addEventListener('click', e => {
   e.stopPropagation()
 })
 
