@@ -1,14 +1,3 @@
-// Afficher toutes les recettes grâce au json
-// Afficher les options des filtres dans les select (Utiliser le proxy dans filterSelect.js)
-// Pouvoir rechercher dans les filtres (Commencer la racherche par appliance puis ustenils et ingrédients)
-// Une fois le tag choisis afficher les résultats voulus, pouvoir le supprimer
-// Revoir les select une fois un tag choisi en fonction des correspondances
-// Recherche principal, faire les 2 méthodes
-// Actualiser le total de recette
-// Utiliser le proxy pour rendre les éléments
-
-// Plutot utiliser des composants réutilisables dans affichage.js
-
 import displayRecipes from './affichage.js'
 import recipes from './recipes.js'
 import { fillOptionsWithFilter } from './filterSelect.js'
@@ -24,266 +13,137 @@ const selectedFilters = {
 
 addTagsListsContent(recipes, selectedFilters)
 
-fillOptionsWithFilter('Ingredients', ingredientsList, 'IngredientsList')
-fillOptionsWithFilter('Appareils', appliancesList, 'AppareilsList')
-fillOptionsWithFilter('Ustensiles', utensilsList, 'UstensilesList')
-
 displayRecipes(recipes)
 
-const IngredientsList = document.getElementById('IngredientsList')
-const Ingredients = document.getElementById('Ingredients')
-IngredientsList.onfocus = function () {
-  Ingredients.style.display = 'block'
-}
-for (const option of Ingredients.options) {
-  option.onclick = function () {
-    IngredientsList.value = option.value
-    Ingredients.style.display = 'none'
+function setupAutoList(inputList, dropdown, focusIndex) {
+  inputList.onfocus = function () {
+    dropdown.style.display = 'block';
+  };
+
+  for (const option of dropdown.options) {
+    option.onclick = function () {
+      inputList.value = option.value;
+      dropdown.style.display = 'none';
+    };
   }
-};
-IngredientsList.oninput = function () {
-  const text = IngredientsList.value.toUpperCase()
-  for (const option of Ingredients.options) {
-    if (option.value.toUpperCase().indexOf(text) > -1) {
-      option.style.display = 'block'
-    } else {
-      option.style.display = 'none'
+
+  inputList.oninput = function () {
+    const text = inputList.value.toUpperCase();
+    for (const option of dropdown.options) {
+      if (option.value.toUpperCase().indexOf(text) > -1) {
+        option.style.display = 'block';
+      } else {
+        option.style.display = 'none';
+      }
     }
   };
-}
-let currentFocus1 = -1
-IngredientsList.onkeydown = function (e) {
-  if (e.keyCode === 40) {
-    currentFocus1++
-    addActive1(Ingredients.options)
-  } else if (e.keyCode === 38) {
-    currentFocus1--
-    addActive1(Ingredients.options)
-  } else if (e.keyCode === 13) {
-    e.preventDefault()
-    if (currentFocus1 > -1) {
-      if (Ingredients.options) { Ingredients.options[currentFocus1].click() }
-    }
-  }
-}
 
-function addActive1 (x) {
-  if (!x) return false
-  removeActive1(x)
-  if (currentFocus1 >= x.length) currentFocus1 = 0
-  if (currentFocus1 < 0) { currentFocus1 = (x.length - 1) }
-  x[currentFocus1].classList.add('active')
-}
-function removeActive1 (x) {
-  for (let i = 0; i < x.length; i++) {
-    x[i].classList.remove('active')
-  }
-}
-
-const AppareilsList = document.getElementById('AppareilsList')
-const Appareils = document.getElementById('Appareils')
-AppareilsList.onfocus = function () {
-  Appareils.style.display = 'block'
-}
-for (const option of Appareils.options) {
-  option.onclick = function () {
-    AppareilsList.value = option.value
-    Appareils.style.display = 'none'
-  }
-};
-AppareilsList.oninput = function () {
-  const text = AppareilsList.value.toUpperCase()
-  for (const option of Appareils.options) {
-    if (option.value.toUpperCase().indexOf(text) > -1) {
-      option.style.display = 'block'
-    } else {
-      option.style.display = 'none'
+  let currentFocus = focusIndex;
+  inputList.onkeydown = function (e) {
+    if (e.keyCode === 40) {
+      currentFocus++;
+      addActive(dropdown.options);
+    } else if (e.keyCode === 38) {
+      currentFocus--;
+      addActive(dropdown.options);
+    } else if (e.keyCode === 13) {
+      e.preventDefault();
+      if (currentFocus > -1) {
+        if (dropdown.options) {
+          dropdown.options[currentFocus].click();
+        }
+      }
     }
   };
-}
-let currentFocus2 = -1
-AppareilsList.onkeydown = function (e) {
-  if (e.keyCode === 40) {
-    currentFocus2++
-    addActive2(Appareils.options)
-  } else if (e.keyCode === 38) {
-    currentFocus2--
-    addActive2(Appareils.options)
-  } else if (e.keyCode === 13) {
-    e.preventDefault()
-    if (currentFocus2 > -1) {
-      if (Appareils.options) { Appareils.options[currentFocus2].click() }
+
+  function addActive(x) {
+    if (!x) return false;
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = x.length - 1;
+    x[currentFocus].classList.add('active');
+  }
+
+  function removeActive(x) {
+    for (let i = 0; i < x.length; i++) {
+      x[i].classList.remove('active');
     }
   }
 }
 
-function addActive2 (x) {
-  if (!x) return false
-  removeActive2(x)
-  if (currentFocus2 >= x.length) currentFocus2 = 0
-  if (currentFocus2 < 0) { currentFocus2 = (x.length - 1) }
-  x[currentFocus2].classList.add('active')
-}
-function removeActive2 (x) {
-  for (let i = 0; i < x.length; i++) {
-    x[i].classList.remove('active')
-  }
-}
+const IngredientsList = document.getElementById('IngredientsList');
+const Ingredients = document.getElementById('Ingredients');
+setupAutoList(IngredientsList, Ingredients, -1);
 
-const UstensilesList = document.getElementById('UstensilesList')
-const Ustensiles = document.getElementById('Ustensiles')
-UstensilesList.onfocus = function () {
-  Ustensiles.style.display = 'block'
-}
-for (const option of Ustensiles.options) {
-  option.onclick = function () {
-    UstensilesList.value = option.value
-    Ustensiles.style.display = 'none'
-  }
-};
-UstensilesList.oninput = function () {
-  const text = UstensilesList.value.toUpperCase()
-  for (const option of Ustensiles.options) {
-    if (option.value.toUpperCase().indexOf(text) > -1) {
-      option.style.display = 'block'
+const AppareilsList = document.getElementById('AppareilsList');
+const Appareils = document.getElementById('Appareils');
+setupAutoList(AppareilsList, Appareils, -1);
+
+const UstensilesList = document.getElementById('UstensilesList');
+const Ustensiles = document.getElementById('Ustensiles');
+setupAutoList(UstensilesList, Ustensiles, -1);
+
+addListenersToDropDowns()
+
+// Permez de clear le texte des inputs avec la croix
+document.addEventListener('DOMContentLoaded', function() {
+  const inputField = document.getElementById('IngredientsList');
+  const clearIcon = document.querySelector('.fa-xmark');
+
+  inputField.addEventListener('input', function() {
+    if (inputField.value.length > 0) {
+      clearIcon.style.display = 'block';
     } else {
-      option.style.display = 'none'
+      clearIcon.style.display = 'none';
     }
-  };
-}
-let currentFocus3 = -1
-UstensilesList.onkeydown = function (e) {
-  if (e.keyCode === 40) {
-    currentFocus3++
-    addActive3(Ustensiles.options)
-  } else if (e.keyCode === 38) {
-    currentFocus3--
-    addActive3(Ustensiles.options)
-  } else if (e.keyCode === 13) {
-    e.preventDefault()
-    if (currentFocus3 > -1) {
-      if (Ustensiles.options) { Ustensiles.options[currentFocus3].click() }
-    }
-  }
-}
-
-function addActive3 (x) {
-  if (!x) return false
-  removeActive3(x)
-  if (currentFocus3 >= x.length) currentFocus3 = 0
-  if (currentFocus3 < 0) { currentFocus3 = (x.length - 1) }
-  x[currentFocus3].classList.add('active')
-}
-function removeActive3 (x) {
-  for (let i = 0; i < x.length; i++) {
-    x[i].classList.remove('active')
-  }
-}
-
-const dropDown1 = document.querySelector('.drop-down1')
-const searchContent1 = document.querySelector('.SearchContent')
-dropDown1.addEventListener('click', e => {
-  const container = e.target.classList.contains("drop-down1")? e.target : e.target.closest(".drop-down1")
-  container.classList.toggle("open")
-  if (container.classList.contains("open")) {
-    dropDown1.querySelector('input').focus()
-  }
-})
-
-searchContent1.addEventListener('click', e => {
-  if (e.target.nodeName != 'OPTION') {
-    e.stopPropagation()
-  }
-  if (e.target.nodeName === 'OPTION') {
-    const selectedOption = e.target
-    const selectedIngredient = e.target.value.toLowerCase()
-    const recipesWithSelectedIngredient = recipes.filter(recipe =>
-      recipe.ingredients.some(ingredient =>
-        ingredient.ingredient.toLowerCase() === selectedIngredient
-      )
-    )
-    if (recipesWithSelectedIngredient.length > 0) {
-      selectedFilters.ingredients.push(selectedIngredient)
-      const filteredRecipes = updateDisplayedRecipes(selectedFilters, recipes)
-      addFilterTag('ingredients', selectedIngredient)
-      addTagsListsContent(filteredRecipes, selectedFilters)
-      fillOptionsWithFilter('Ingredients', ingredientsList, 'IngredientsList')
-      fillOptionsWithFilter('Appareils', appliancesList, 'AppareilsList')
-      fillOptionsWithFilter('Ustensiles', utensilsList, 'UstensilesList')
-      displayRecipes(filteredRecipes)
-    } else {
-      alert(`Aucune recette ne contient l'ingrédient "${selectedIngredient}".`)
-    }
-    searchContent1.querySelector('input').value = ''
-    e.stopPropagation()
-  }
-})
-
-document.querySelector('#AppareilsList').addEventListener('change', (e) => {
-  const selectedAppliance = e.target.value.toLowerCase()
-  e.target.value = ''
-  const recipesWithSelectedAppliance = recipes.filter(recipe =>
-    recipe.appliance.toLowerCase() === selectedAppliance
-  )
-
-  if (recipesWithSelectedAppliance.length > 0) {
-    selectedFilters.appliances.push(selectedAppliance)
-    const filteredRecipes = updateDisplayedRecipes(selectedFilters, recipes)
-    addFilterTag('appliances', selectedAppliance)
-    addTagsListsContent(filteredRecipes, selectedFilters)
+  });
+  
+  clearIcon.addEventListener('click', function() {
+    inputField.value = '';
+    clearIcon.style.display = 'none';
     fillOptionsWithFilter('Ingredients', ingredientsList, 'IngredientsList')
+    });
+});
+
+// Permez de clear le texte des inputs avec la croix
+document.addEventListener('DOMContentLoaded', function() {
+  const inputField2 = document.getElementById('AppareilsList');
+  const clearIcon2 = document.getElementById('AppareilsList').nextElementSibling;
+
+  inputField2.addEventListener('input', function() {
+    if (inputField2.value.length > 0) {
+      clearIcon2.style.display = 'block';
+    } else {
+      clearIcon2.style.display = 'none';
+    }
+  });
+  
+  clearIcon2.addEventListener('click', function() {
+    inputField2.value = '';
+    clearIcon2.style.display = 'none';
     fillOptionsWithFilter('Appareils', appliancesList, 'AppareilsList')
+    });
+});
+
+// Permez de clear le texte des inputs avec la croix
+document.addEventListener('DOMContentLoaded', function() {
+  const inputField3 = document.getElementById('UstensilesList');
+  const clearIcon3 = document.getElementById('UstensilesList').nextElementSibling;
+
+  inputField3.addEventListener('input', function() {
+    if (inputField3.value.length > 0) {
+      clearIcon3.style.display = 'block';
+    } else {
+      clearIcon3.style.display = 'none';
+    }
+  });
+  
+  clearIcon3.addEventListener('click', function() {
+    inputField3.value = '';
+    clearIcon3.style.display = 'none';
     fillOptionsWithFilter('Ustensiles', utensilsList, 'UstensilesList')
-    displayRecipes(filteredRecipes)
-  } else {
-    alert(`Aucune recette ne contient l'appareil "${selectedAppliance}".`)
-  }
-})
-
-const dropDown2 = document.querySelector('.drop-down2')
-const searchContent2 = dropDown2.querySelector('.SearchContent')
-dropDown2.addEventListener('click', e => {
-  const container = e.target.classList.contains("drop-down2")? e.target : e.target.closest(".drop-down2")
-  container.classList.toggle("open")
-})
-
-searchContent2.addEventListener('click', e => {
-  e.stopPropagation()
-})
-
-document.querySelector('#UstensilesList').addEventListener('change', (e) => {
-  const selectedUtensil = e.target.value.toLowerCase()
-  e.target.value = ''
-  const recipesWithSelectedUtensil = recipes.filter(recipe =>
-    recipe.ustensils.some(utensil =>
-      utensil.toLowerCase() === selectedUtensil
-    )
-  )
-
-  if (recipesWithSelectedUtensil.length > 0) {
-    selectedFilters.utensils = [selectedUtensil]
-    const filteredRecipes = updateDisplayedRecipes(selectedFilters, recipes)
-    addFilterTag('utensils', selectedUtensil)
-    addTagsListsContent(filteredRecipes, selectedFilters)
-    fillOptionsWithFilter('Ingredients', ingredientsList, 'IngredientsList')
-    fillOptionsWithFilter('Appareils', appliancesList, 'AppareilsList')
-    fillOptionsWithFilter('Ustensiles', utensilsList, 'UstensilesList')
-    displayRecipes(filteredRecipes)
-  } else {
-    alert(`Aucune recette ne contient l'ustensile "${selectedUtensil}".`)
-  }
-})
-
-const dropDown3 = document.querySelector('.drop-down3')
-const searchContent3 = dropDown3.querySelector('.SearchContent')
-dropDown3.addEventListener('click', e => {
-  const container = e.target.classList.contains("drop-down3")? e.target : e.target.closest(".drop-down3")
-  container.classList.toggle("open")
-})
-
-searchContent3.addEventListener('click', e => {
-  e.stopPropagation()
-})
+    });
+});
 
 function removeFilter (filterType, filterValue) {
   selectedFilters[filterType] = selectedFilters[filterType].filter(filter => filter !== filterValue)
@@ -399,4 +259,83 @@ function filterRecipes (searchTerm) {
   )
 }
 
+fillOptionsWithFilter('Ingredients', ingredientsList, 'IngredientsList');
+setupAutoList(IngredientsList, Ingredients, -1);
+fillOptionsWithFilter('Appareils', appliancesList, 'AppareilsList')
+setupAutoList(AppareilsList, Appareils, -1);
+fillOptionsWithFilter('Ustensiles', utensilsList, 'UstensilesList')
+setupAutoList(UstensilesList, Ustensiles, -1);
+
 updateDisplayedRecipes(selectedFilters, recipes)
+
+function addListenersToDropDowns () {
+  const dropDowns = Array.from(document.querySelectorAll('.drop-down'))
+  dropDowns.forEach(elt => {
+    const searchContent = elt.querySelector('.SearchContent')
+    elt.addEventListener('click', (e) => {
+      const container = e.target.classList.contains("drop-down")? e.target : e.target.closest(".drop-down")
+      container.classList.toggle("open")
+      if (container.classList.contains("open")) {
+         elt.querySelector('input').focus()
+      }
+    })
+    searchContent.addEventListener('click', e => {
+      if (e.target.nodeName != 'OPTION') {
+        e.stopPropagation()
+      }
+      if (e.target.nodeName === 'OPTION') {
+        const selectedOption = e.target
+        const selectedElt = e.target.value.toLowerCase()
+        let filteredRecipes = [];
+        const type = searchContent.dataset.type
+        switch (type){
+          case 'Ingredients':
+            filteredRecipes = recipes.filter(recipe =>
+              recipe.ingredients.some(ingredient =>
+                ingredient.ingredient.toLowerCase() === selectedElt
+              )
+            )
+            break;
+          case 'Appareils':
+              filteredRecipes = recipes.filter(recipe =>
+                recipe.appliance.toLowerCase() === selectedElt
+              )
+              break;
+          case 'Ustensiles':
+              filteredRecipes = recipes.filter(recipe =>
+                recipe.ustensils.some(utensil =>
+                  utensil.toLowerCase() === selectedElt
+                )
+              )
+              break;
+          }    
+        if (filteredRecipes.length > 0) {
+          switch (type){
+            case 'Ingredients':
+              selectedFilters.ingredients.push(selectedElt)
+              addFilterTag('ingredients', selectedElt)
+              break;
+            case 'Appareils':
+                selectedFilters.appliances.push(selectedElt)
+                addFilterTag('appliances', selectedElt)
+                break;
+            case 'Ustensiles':
+                selectedFilters.utensils.push(selectedElt)
+                addFilterTag('utensils', selectedElt)
+                break;
+          } 
+          filteredRecipes = updateDisplayedRecipes(selectedFilters, recipes)
+          addTagsListsContent(filteredRecipes, selectedFilters)
+          fillOptionsWithFilter('Ingredients', ingredientsList, 'IngredientsList')
+          fillOptionsWithFilter('Appareils', appliancesList, 'AppareilsList')
+          fillOptionsWithFilter('Ustensiles', utensilsList, 'UstensilesList')
+          displayRecipes(filteredRecipes)
+        } else {
+          alert(`Aucune recette ne contient l'ingrédient "${selectedElt}".`)
+        }
+        searchContent.querySelector('input').value = ''
+        e.stopPropagation()
+      }
+    })
+  })
+}

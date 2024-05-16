@@ -342,21 +342,13 @@ form button i {
     border-radius: 12px;
 }
 
-/* Style pour la flèche par défaut */
-.SearchContainer div p::after {
-    content: "\25BC";
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    font-size: 14px;
-    pointer-events: none;
-    transition: transform 0.3s ease;
-    pointer-events: none;
+.SearchContainer p i {
+    transition: .3s;
 }
 
-.SearchContainer div:focus::after {
-    transform: translateY(-50%) rotate(180deg);
+.SearchContainer .open p i {
+    transform: rotate(180deg);
+    transition: .3s;
 }
 
 .noRecipes {
@@ -413,9 +405,19 @@ option:hover, .active{
     margin-top: 0.6em;
 }
 
-.SearchContent i {
+.SearchContent .fa-magnifying-glass {
     position: absolute;
-    top: 20px;
-    right: 35px;
+    top: 19px;
+    right: 30px;
     font-size: 1.4em;
+}
+
+.fa-xmark {
+    position: absolute;
+    top: 30px;
+    right: 60px;
+    font-size: 1.2em;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: none;
 }
