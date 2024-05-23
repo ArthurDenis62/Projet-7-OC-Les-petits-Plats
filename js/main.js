@@ -85,65 +85,27 @@ setupAutoList(UstensilesList, Ustensiles, -1);
 
 addListenersToDropDowns()
 
-// Permez de clear le texte des inputs avec la croix
 document.addEventListener('DOMContentLoaded', function() {
-  const inputField = document.getElementById('IngredientsList');
-  const clearIcon = document.querySelector('.fa-xmark');
+  function clearableInput(inputId, listName, listData) {
+    const inputField = document.getElementById(inputId);
+    const clearIcon = inputField.nextElementSibling;
 
-  inputField.addEventListener('input', function() {
-    if (inputField.value.length > 0) {
-      clearIcon.style.display = 'block';
-    } else {
+    inputField.addEventListener('input', function() {
+      clearIcon.style.display = inputField.value.length > 0 ? 'block' : 'none';
+    });
+
+    clearIcon.addEventListener('click', function() {
+      inputField.value = '';
       clearIcon.style.display = 'none';
-    }
-  });
-  
-  clearIcon.addEventListener('click', function() {
-    inputField.value = '';
-    clearIcon.style.display = 'none';
-    fillOptionsWithFilter('Ingredients', ingredientsList, 'IngredientsList')
+      fillOptionsWithFilter(listName, listData, inputId);
     });
+  }
+
+  clearableInput('IngredientsList', 'Ingredients', ingredientsList);
+  clearableInput('AppareilsList', 'Appareils', appliancesList);
+  clearableInput('UstensilesList', 'Ustensiles', utensilsList);
 });
 
-// Permez de clear le texte des inputs avec la croix
-document.addEventListener('DOMContentLoaded', function() {
-  const inputField2 = document.getElementById('AppareilsList');
-  const clearIcon2 = document.getElementById('AppareilsList').nextElementSibling;
-
-  inputField2.addEventListener('input', function() {
-    if (inputField2.value.length > 0) {
-      clearIcon2.style.display = 'block';
-    } else {
-      clearIcon2.style.display = 'none';
-    }
-  });
-  
-  clearIcon2.addEventListener('click', function() {
-    inputField2.value = '';
-    clearIcon2.style.display = 'none';
-    fillOptionsWithFilter('Appareils', appliancesList, 'AppareilsList')
-    });
-});
-
-// Permez de clear le texte des inputs avec la croix
-document.addEventListener('DOMContentLoaded', function() {
-  const inputField3 = document.getElementById('UstensilesList');
-  const clearIcon3 = document.getElementById('UstensilesList').nextElementSibling;
-
-  inputField3.addEventListener('input', function() {
-    if (inputField3.value.length > 0) {
-      clearIcon3.style.display = 'block';
-    } else {
-      clearIcon3.style.display = 'none';
-    }
-  });
-  
-  clearIcon3.addEventListener('click', function() {
-    inputField3.value = '';
-    clearIcon3.style.display = 'none';
-    fillOptionsWithFilter('Ustensiles', utensilsList, 'UstensilesList')
-    });
-});
 
 function removeFilter (filterType, filterValue) {
   selectedFilters[filterType] = selectedFilters[filterType].filter(filter => filter !== filterValue)
