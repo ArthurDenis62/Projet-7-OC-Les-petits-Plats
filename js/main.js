@@ -205,20 +205,48 @@ searchInput.addEventListener('input', (e) => {
   }
 })
 
-function filterRecipes (searchTerm) {
-  return recipes.filter(recipe =>
-    searchTerm.split(/\s*,\s*|\s+/).every(searchTerm =>
-      recipe.name.toLowerCase().includes(searchTerm.trim()) || // Par titre de recette
-      recipe.ingredients.some(ingredient =>
-        ingredient.ingredient.toLowerCase().includes(searchTerm.trim()) // Par ingrédients
-      ) ||
-      recipe.appliance.toLowerCase().includes(searchTerm.trim()) || // Par appareils
-      recipe.ustensils.some(utensil =>
-        utensil.toLowerCase().includes(searchTerm.trim()) // Par ustensiles
-      ) ||
-      recipe.description.toLowerCase().includes(searchTerm.trim()) // Par descriptions
-    )
-  )
+function filterRecipes (searchTerms) {
+  let searchRecipes = [...recipes]
+  let filteredRecipes = []
+  const searchTermArray = searchTerms.split(/\s*,\s*|\s+/)
+  for (let x = 0; x < searchTermArray.length; x++) {
+    let searchTerm = searchTermArray[x]
+    console.log(filteredRecipes)
+    for (let i = 0; i < searchRecipes.length; i++) {
+      const recipe = searchRecipes[i]
+      if (recipe.name.toLowerCase().includes(searchTerm.trim().toLowerCase()) ||
+        recipeContainsIngredientsInSearch(recipe, searchTerm) ||
+        recipe.appliance.toLowerCase().includes(searchTerm.trim().toLowerCase()) ||
+        recipeContainsUstensilsInSearch(recipe, searchTerm) ||
+        recipe.description.toLowerCase().includes(searchTerm.trim().toLowerCase())
+      ) {
+      filteredRecipes.push(recipe)
+      }
+    }
+    if (x < searchTermArray.length - 1) {
+      searchRecipes = [...filteredRecipes]
+      filteredRecipes = []
+    }
+  }
+  return filteredRecipes
+}
+
+function recipeContainsIngredientsInSearch(recipe, searchTerm) {
+  for (let i = 0; i < recipe.ingredients.length; i++) {
+    if (recipe.ingredients[i].ingredient.toLowerCase().includes(searchTerm.trim().toLowerCase())) {
+      return true
+    }
+  }
+  return false
+}
+
+function recipeContainsUstensilsInSearch(recipe, searchTerm) {
+  for (let i = 0; i < recipe.ustensils.length; i++) {
+    if (recipe.ustensils[i].toLowerCase().includes(searchTerm.trim().toLowerCase())) {
+      return true
+    }
+  }
+  return false
 }
 
 fillOptionsWithFilter('Ingredients', ingredientsList, 'IngredientsList');
